@@ -49,7 +49,7 @@
     "prepublishOnly": "npm run clean && npm run typecheck && npm test"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^18.0.9",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
