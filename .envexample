@@ -1,0 +1,80 @@
+# draino configuration
+# -----------------------------------------------------------------------------
+# Copy this file to .env, then fill in PROVIDER_URL and WATCH_ADDRESSES.
+#
+#   Windows:      copy .envexample .env
+#   macOS/Linux:  cp .envexample .env
+#
+# .env is gitignored. THIS file is committed - never put real secrets here.
+# Every value below is a plain `KEY=value` line; no quotes needed.
+# -----------------------------------------------------------------------------
+
+
+# [required] JSON-RPC endpoint for the chain you want to watch.
+# Any http(s):// or ws(s):// URL is accepted; in practice use https://.
+#
+# Alchemy free tier - recommended: 30M compute units/month, 15 req/s, WebSockets.
+#   https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY
+# Infura free tier: 3M credits/day.
+#   https://mainnet.infura.io/v3/YOUR_KEY
+# No signup, no key, rate-limited (fine for testing):
+#   https://ethereum-rpc.publicnode.com
+#
+# A 15s poll is one batched multicall, so even the smallest tier is plenty.
+PROVIDER_URL=
+
+
+# [required] Addresses to watch, comma-separated. 0x followed by 40 hex chars.
+# Copy them from the "Receive" screen of your wallet (MetaMask, Rabby, Ledger...).
+# Watching is read-only: never paste a seed phrase or private key here.
+#
+# Example:
+#   WATCH_ADDRESSES=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+WATCH_ADDRESSES=
+
+
+# [optional] ERC-20 tokens to track, as SYMBOL:0xaddress or a bare 0xaddress.
+# Verified Ethereum mainnet contracts:
+#   USDC  0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48   (6 decimals)
+#   USDT  0xdAC17F958D2ee523a2206206994597C13D831ec7   (6 decimals)
+#   DAI   0x6B175474E89094C44Da98b954EedeAC495271d0F   (18 decimals)
+#   WETH  0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2   (18 decimals)
+#
+# Example:
+#   TOKENS=USDC:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48,USDT:0xdAC17F958D2ee523a2206206994597C13D831ec7
+#
+# Symbols are read from the contract when possible and sanitised for display;
+# the SYMBOL prefix is only a fallback for tokens that do not implement symbol().
+TOKENS=
+
+
+# [optional] Private key of a wallet you own (0x + 64 hex chars). Its address is
+# added to the watch list automatically. Leave EMPTY to keep this tool strictly
+# read-only - a key here can spend that wallet's funds.
+PRIVATE_KEY=
+
+
+# [optional] Receives a JSON POST whenever a watched balance changes.
+#
+#   ntfy - free, no account, mobile push:
+#     https://ntfy.sh/<long-random-topic-name>
+#   your own endpoint:
+#     https://example.com/hooks/balances
+#
+# Payload: { "timestamp": "...", "summary": "...", "alerts": [ { "address": ...,
+# "symbol": ..., "previous": ..., "current": ..., "delta": ... } ] }
+#
+# Note: Discord and Slack webhooks expect { "content": ... } / { "text": ... }
+# and will reject this payload shape. Use ntfy or a generic endpoint.
+WEBHOOK_URL=
+
+
+# [tuning] Poll interval in milliseconds. Minimum 1000. 15000 = 4 polls/minute.
+POLL_INTERVAL_MS=15000
+
+# [tuning] Maximum parallel RPC requests. Minimum 1.
+# Raise only if your provider's rate limit allows it.
+CONCURRENCY=8
+
+# [tuning] Directory for the daily .log and .events.jsonl files.
+LOG_DIR=./logs

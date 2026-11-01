@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: ['18', '20', '22']
+        include:
+          # Windows is supported, so verify it on the current LTS at least.
+          - os: windows-latest
+            node: '22'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test the built CLI
+        shell: bash
+        run: |
+          node bin/index.js --help > /dev/null
+          # Config errors must not echo the provider URL, which carries the API key.
+          output=$(PROVIDER_URL='https://host.invalid/v2/SECRETKEY1234567890ABCDEF' \
+                   WATCH_ADDRESSES='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045' \
+                   node bin/index.js portfolio 2>&1 || true)
+          echo "$output"
+          if echo "$output" | grep -q 'SECRETKEY1234567890ABCDEF'; then
+            echo "::error::provider URL leaked into output"
+            exit 1
+          fi
+
+  audit:
+    name: dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Audit runtime dependencies
+        run: npm audit --omit=dev --audit-level=high

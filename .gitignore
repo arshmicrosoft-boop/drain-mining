@@ -1,0 +1,25 @@
+# Secrets and local config
+.env
+.env.*
+!.envexample
+
+# Build output
+bin
+*.tsbuildinfo
+
+# Runtime output
+logs
+*.log
+
+# Dependencies
+node_modules
+
+# Editors and OS cruft
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Test and coverage artifacts
+coverage/
+.nyc_output/
