@@ -1,0 +1,60 @@
+{
+  "name": "draino",
+  "version": "1.0.0",
+  "description": "Read-only Ethereum wallet monitor and portfolio CLI: batched balance reads, honest change detection, no keys required",
+  "keywords": [
+    "ethereum",
+    "evm",
+    "wallet",
+    "portfolio",
+    "monitor",
+    "erc20",
+    "multicall",
+    "json-rpc",
+    "cli"
+  ],
+  "homepage": "https://github.com/arshmicrosoft-boop/drain-mining#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arshmicrosoft-boop/drain-mining.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arshmicrosoft-boop/drain-mining/issues"
+  },
+  "author": "arshmicrosoft-boop (https://github.com/arshmicrosoft-boop)",
+  "license": "MIT",
+  "main": "bin/index.js",
+  "bin": {
+    "draino": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "!bin/__tests__",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/index.js",
+    "dev": "ts-node ./src/index.ts",
+    "monitor": "ts-node ./src/index.ts monitor",
+    "portfolio": "ts-node ./src/index.ts portfolio",
+    "test": "tsc && node --test \"bin/__tests__/*.test.js\"",
+    "typecheck": "tsc --noEmit",
+    "clean": "node -e \"require('node:fs').rmSync('bin',{recursive:true,force:true})\"",
+    "logs:clear": "node -e \"require('node:fs').rmSync('logs',{recursive:true,force:true})\"",
+    "prepublishOnly": "npm run clean && npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
