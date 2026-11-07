@@ -1,0 +1,46 @@
+name: Feature request
+description: Propose a change in behaviour
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please read `DESIGN.md` first, especially "Known limitations" — a few obvious
+        ideas (subscriptions, persistence, reorg handling) are already scoped there.
+
+        Out of scope and will be closed: anything that makes the tool able to sign or
+        send transactions.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you unable to do today? Describe the situation, not the solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you'd like
+      description: How you think it should behave, including CLI or env config shape.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Including doing nothing, and why that is not good enough.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirms
+    attributes:
+      label: Confirmations
+      options:
+        - label: This keeps the tool read-only.
+          required: true
+        - label: I checked `DESIGN.md` "Known limitations".
+          required: true

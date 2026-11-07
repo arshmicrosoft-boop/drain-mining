@@ -1,0 +1,80 @@
+name: Bug report
+description: Something broken, or output that looks wrong
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not paste your RPC URL.** It usually contains your API key. Redact it to
+        `https://provider.example/v2/***`.
+
+        Security problems go through the Security tab, not this form.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The command you ran, the output you got, and what you expected instead.
+      placeholder: |
+        Command: npm run portfolio
+        Got: ...
+        Expected: ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: command
+    attributes:
+      label: Command
+      options:
+        - monitor
+        - portfolio
+        - monitor --once
+        - npm test
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Output of `git rev-parse --short HEAD`, or the release tag.
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      description: Output of `node --version`.
+      placeholder: v22.11.0
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11, macOS 15, Ubuntu 24.04
+    validations:
+      required: true
+
+  - type: textarea
+    id: provider
+    attributes:
+      label: Provider
+      description: Which RPC provider and tier. Not the URL.
+      placeholder: Alchemy free tier
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log lines
+      description: |
+        From `logs/YYYY-MM-DD.log`, with addresses redacted if you prefer.
+      render: json
+    validations:
+      required: false

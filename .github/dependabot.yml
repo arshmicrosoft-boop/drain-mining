@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # One PR for type definitions rather than one per package.
+      types:
+        patterns:
+          - '@types/*'
+    ignore:
+      # ethers v6 is a breaking rewrite of the provider API; the migration is a
+      # deliberate change, not an automated bump.
+      - dependency-name: ethers
+        versions: ['>=6.0.0']
+      # @types/node must match the minimum supported runtime, not the latest.
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
