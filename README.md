@@ -1,4 +1,4 @@
-# draino
+# Drain Mining
 
 [![CI](https://github.com/arshmicrosoft-boop/drain-mining/actions/workflows/ci.yml/badge.svg)](https://github.com/arshmicrosoft-boop/drain-mining/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
